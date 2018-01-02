@@ -2,15 +2,23 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\models\JenisKelamin;
 use yii\helpers\ArrayHelper;
+use app\models\JenisKelamin;
 use app\models\MasterProp;
 use app\models\MasterKab;
 use app\models\MasterKec;
+use app\models\MasterDesa;
+use app\models\Pendidikan;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Mitra */
 /* @var $form yii\widgets\ActiveForm */
+
+$this->registerAssetBundle(yii\web\JqueryAsset::className(), View::POS_HEAD);
+$this->registerCssFile('@web/css/font-awesome/css/font-awesome.min.css' , ['position' => View::POS_HEAD]);
+$this->registerCssFile('@web/css/custom.css' , ['position' => View::POS_HEAD]);
+
 ?>
 
 <div class="mitra-form">
@@ -25,7 +33,12 @@ use app\models\MasterKec;
         ['prompt'=>'Pilih Jenis Kelamin']
     )?> 
 
-    <?= $form->field($model, 'tanggal_lahir')->textInput() ?>
+    <!-- <?= $form->field($model, 'tanggal_lahir')->textInput() ?> -->
+    <?= $form->field($model, 'tanggal_lahir')->widget(\yii\jui\DatePicker::classname(), [
+        //'language' => 'ru',
+        // 'dateFormat' => 'yyyy-MM-dd',
+        'options' => ['class' => 'form-control']
+    ]) ?>
 
     <!-- <?= $form->field($model, 'propinsi')->textInput() ?> -->
     <?= $form->field($model, 'propinsi')->dropDownList(
@@ -45,13 +58,35 @@ use app\models\MasterKec;
         ['prompt'=>'Pilih Kecamatan']
     )?>
 
+    <!-- <?= $form->field($model, 'desa')->textInput(['maxlength' => true]) ?> -->
+    <?= $form->field($model, 'desa')->dropDownList(
+        ArrayHelper::map(MasterDesa::find()->all(),'id_desa','nm_desa'),
+        ['prompt'=>'Pilih Desa']
+    )?>
+
     <?= $form->field($model, 'no_hp')->textInput() ?>
 
-    <?= $form->field($model, 'pendidikan')->textInput() ?>
+    <!-- <?= $form->field($model, 'pendidikan')->textInput() ?> -->
+    <?= $form->field($model, 'pendidikan')->dropDownList(
+        ArrayHelper::map(Pendidikan::find()->all(),'id','nama'),
+        ['prompt'=>'Pilih Pendidikan']
+    )?>
 
     <?= $form->field($model, 'pengalaman_survei')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'penguasaan_kendaraan_motor')->textInput() ?>
+    <div style="display: none">
+        <?= $form->field($model, 'penguasaan_kendaraan_motor')->textInput() ?>
+    </div>
+    
+    <div class="form-group field-fenomena-upload_foto_dokumen required">
+        <label class="control-label" for="fenomena-upload_foto_dokumen">Upload Foto / Dokumen</label>
+        <div class="dropzone form-group" id="dropzone">
+            <div class="dz-default dz-message"><span>Drop files or click here to upload (jpg, png, pdf)</span></div>
+        </div>
+        <div class="help-block"></div>
+    </div>
+
+
 
     <?= $form->field($model, 'penguasaan_hp_android_ics_keatas')->textInput() ?>
 
@@ -72,3 +107,42 @@ use app\models\MasterKec;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<!-- <i class="fa fa-camera-retro fa-5x"></i> fa-5x -->
+<!-- <div class="col-md-4"> -->
+
+  <!-- <div class="input-group spinner">
+    <input type="text" class="form-control" value="1" min="0" max="5">
+    <div class="input-group-btn-vertical">
+      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+    </div>
+  </div>
+  <p class="help-block">Min 0 - Max 5.</p> -->
+  
+<!-- </div> -->
+
+<script>
+    $(function(){
+
+    $('.spinner .btn:first-of-type').on('click', function() {
+      var btn = $(this);
+      var input = btn.closest('.spinner').find('input');
+      if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {    
+        input.val(parseInt(input.val(), 10) + 1);
+      } else {
+        btn.next("disabled", true);
+      }
+    });
+    $('.spinner .btn:last-of-type').on('click', function() {
+      var btn = $(this);
+      var input = btn.closest('.spinner').find('input');
+      if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {    
+        input.val(parseInt(input.val(), 10) - 1);
+      } else {
+        btn.prev("disabled", true);
+      }
+    });
+
+})
+</script>

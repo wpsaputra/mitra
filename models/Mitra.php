@@ -14,6 +14,7 @@ use Yii;
  * @property int $propinsi
  * @property int $kabupaten
  * @property int $kecamatan
+ * @property string $desa
  * @property int $no_hp
  * @property int $pendidikan
  * @property string $pengalaman_survei
@@ -31,6 +32,7 @@ use Yii;
  * @property MasterKab $kabupaten0
  * @property MasterKec $kecamatan0
  * @property User $user
+ * @property MasterDesa $desa0
  */
 class Mitra extends \yii\db\ActiveRecord
 {
@@ -48,17 +50,19 @@ class Mitra extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nama', 'jenis_kelamin', 'tanggal_lahir', 'propinsi', 'kabupaten', 'kecamatan', 'no_hp', 'pendidikan', 'pengalaman_survei', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'id_user', 'foto'], 'required'],
+            [['nama', 'jenis_kelamin', 'tanggal_lahir', 'propinsi', 'kabupaten', 'kecamatan', 'desa', 'no_hp', 'pendidikan', 'pengalaman_survei', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'id_user', 'foto'], 'required'],
             [['jenis_kelamin', 'propinsi', 'kabupaten', 'kecamatan', 'no_hp', 'pendidikan', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'id_user'], 'integer'],
             [['tanggal_lahir'], 'safe'],
             [['pengalaman_survei', 'foto'], 'string'],
             [['nama'], 'string', 'max' => 256],
+            [['desa'], 'string', 'max' => 10],
             [['pendidikan'], 'exist', 'skipOnError' => true, 'targetClass' => Pendidikan::className(), 'targetAttribute' => ['pendidikan' => 'id']],
             [['jenis_kelamin'], 'exist', 'skipOnError' => true, 'targetClass' => JenisKelamin::className(), 'targetAttribute' => ['jenis_kelamin' => 'id']],
             [['propinsi'], 'exist', 'skipOnError' => true, 'targetClass' => MasterProp::className(), 'targetAttribute' => ['propinsi' => 'id_prop']],
             [['kabupaten'], 'exist', 'skipOnError' => true, 'targetClass' => MasterKab::className(), 'targetAttribute' => ['kabupaten' => 'id_kab']],
             [['kecamatan'], 'exist', 'skipOnError' => true, 'targetClass' => MasterKec::className(), 'targetAttribute' => ['kecamatan' => 'id_kec']],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
+            [['desa'], 'exist', 'skipOnError' => true, 'targetClass' => MasterDesa::className(), 'targetAttribute' => ['desa' => 'id_desa']],
         ];
     }
 
@@ -75,6 +79,7 @@ class Mitra extends \yii\db\ActiveRecord
             'propinsi' => 'Propinsi',
             'kabupaten' => 'Kabupaten',
             'kecamatan' => 'Kecamatan',
+            'desa' => 'Desa',
             'no_hp' => 'No Hp',
             'pendidikan' => 'Pendidikan',
             'pengalaman_survei' => 'Pengalaman Survei',
@@ -134,5 +139,13 @@ class Mitra extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'id_user']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDesa0()
+    {
+        return $this->hasOne(MasterDesa::className(), ['id_desa' => 'desa']);
     }
 }

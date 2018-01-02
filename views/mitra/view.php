@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'propinsi',
             'kabupaten',
             'kecamatan',
+            'desa',
             'no_hp',
             'pendidikan',
             'pengalaman_survei:ntext',

@@ -29,6 +29,8 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'kecamatan') ?>
 
+    <?php // echo $form->field($model, 'desa') ?>
+
     <?php // echo $form->field($model, 'no_hp') ?>
 
     <?php // echo $form->field($model, 'pendidikan') ?>
