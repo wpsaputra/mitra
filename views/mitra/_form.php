@@ -2,6 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\JenisKelamin;
+use yii\helpers\ArrayHelper;
+use app\models\MasterProp;
+use app\models\MasterKab;
+use app\models\MasterKec;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Mitra */
@@ -14,15 +19,31 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'jenis_kelamin')->textInput() ?>
+    <!-- <?= $form->field($model, 'jenis_kelamin')->textInput() ?> -->
+    <?= $form->field($model, 'jenis_kelamin')->dropDownList(
+        ArrayHelper::map(JenisKelamin::find()->all(),'id','nama'),
+        ['prompt'=>'Pilih Jenis Kelamin']
+    )?> 
 
     <?= $form->field($model, 'tanggal_lahir')->textInput() ?>
 
-    <?= $form->field($model, 'propinsi')->textInput() ?>
+    <!-- <?= $form->field($model, 'propinsi')->textInput() ?> -->
+    <?= $form->field($model, 'propinsi')->dropDownList(
+        ArrayHelper::map(MasterProp::find()->all(),'id_prop','nm_prop'),
+        ['prompt'=>'Pilih Propinsi']
+    )?>
 
-    <?= $form->field($model, 'kabupaten')->textInput() ?>
+    <!-- <?= $form->field($model, 'kabupaten')->textInput() ?> -->
+    <?= $form->field($model, 'kabupaten')->dropDownList(
+        ArrayHelper::map(MasterKab::find()->all(),'id_kab','nm_kab'),
+        ['prompt'=>'Pilih Kabupaten']
+    )?>
 
-    <?= $form->field($model, 'kecamatan')->textInput() ?>
+    <!-- <?= $form->field($model, 'kecamatan')->textInput() ?> -->
+    <?= $form->field($model, 'kecamatan')->dropDownList(
+        ArrayHelper::map(MasterKec::find()->all(),'id_kec','nm_kec'),
+        ['prompt'=>'Pilih Kecamatan']
+    )?>
 
     <?= $form->field($model, 'no_hp')->textInput() ?>
 
