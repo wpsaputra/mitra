@@ -11,6 +11,11 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\UploadForm;
 use yii\web\UploadedFile;
+use app\models\MasterKab;
+use app\models\MasterKec;
+use app\models\MasterDesa;
+use yii\bootstrap\Html;
+use yii\helpers\ArrayHelper;
 
 class SiteController extends Controller
 {
@@ -161,4 +166,31 @@ class SiteController extends Controller
     }
 
     public function beforeAction($action) { $this->enableCsrfValidation = false; return parent::beforeAction($action); }
+
+    public function actionGet()
+    {
+    	$request = Yii::$app->request;
+    	$obj = $request->post('obj');
+    	$value = $request->post('value');
+    	switch ($obj) {
+    		case 'mitra-kabupaten':
+                $data = MasterKab::find()->where(['id_prop' => $value])->all();
+                $tagOptions = ['prompt' => "Pilih Kabupaten"];
+                return Html::renderSelectOptions([], ArrayHelper::map($data, 'id_kab', 'nm_kab'), $tagOptions);
+    			break;
+    		case 'mitra-kecamatan':
+                $data = MasterKec::find()->where(['id_kab' => $value])->all();
+                $tagOptions = ['prompt' => "Pilih Kecamatan"];
+                return Html::renderSelectOptions([], ArrayHelper::map($data, 'id_kec', 'nm_kec'), $tagOptions);
+    			break;
+    		case 'mitra-desa':
+                $data = MasterDesa::find()->where(['id_kec' => $value])->all();
+                $tagOptions = ['prompt' => "Pilih Desa"];
+                return Html::renderSelectOptions([], ArrayHelper::map($data, 'id_desa', 'nm_desa'), $tagOptions);
+    			break;
+    	}
+    	$tagOptions = ['prompt' => "=== Select ==="];
+        // return Html::renderSelectOptions([], ArrayHelper::map($data, 'id', 'name'), $tagOptions);
+        // return $obj;
+    }
 }

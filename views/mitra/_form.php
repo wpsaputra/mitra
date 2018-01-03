@@ -22,6 +22,23 @@ $this->registerCssFile('@web/css/custom.css' , ['position' => View::POS_HEAD]);
 
 $this->registerJsFile('@web/js/dropzone.js' , ['position' => View::POS_BEGIN]);
 $this->registerCssFile('@web/css/dropzone.css' , ['position' => View::POS_HEAD]);
+
+// http://lab-informatika.com/script/26/yii-2-dependent-dropdown
+$js = '$(".dependent-input").on("change", function() {
+	var value = $(this).val(),
+		obj = $(this).attr("id"),
+		next = $(this).attr("data-next");
+	$.ajax({
+		url: "' . Yii::$app->urlManager->createUrl('site/get') . '",
+		data: {value: value, obj: next},
+		type: "POST",
+		success: function(data) {
+			$("#" + next).html(data);
+		}
+	});
+});';
+// $this->registerJs($js, ['position' => View::POS_HEAD]);
+$this->registerJs($js);
 ?>
 
 <div class="mitra-form">
@@ -46,24 +63,37 @@ $this->registerCssFile('@web/css/dropzone.css' , ['position' => View::POS_HEAD])
     <!-- <?= $form->field($model, 'propinsi')->textInput() ?> -->
     <?= $form->field($model, 'propinsi')->dropDownList(
         ArrayHelper::map(MasterProp::find()->all(),'id_prop','nm_prop'),
-        ['prompt'=>'Pilih Propinsi']
+        [
+            'prompt'=>'Pilih Propinsi',
+            // 'id' => 'propinsi',
+            'class' => 'dependent-input form-control',
+            'data-next' => 'mitra-kabupaten'
+        ]
     )?>
 
     <!-- <?= $form->field($model, 'kabupaten')->textInput() ?> -->
     <?= $form->field($model, 'kabupaten')->dropDownList(
-        ArrayHelper::map(MasterKab::find()->all(),'id_kab','nm_kab'),
-        ['prompt'=>'Pilih Kabupaten']
+        [],
+        [
+            'prompt'=>'Pilih Kabupaten',
+            'class' => 'dependent-input form-control',
+            'data-next' => 'mitra-kecamatan'
+        ]
     )?>
 
     <!-- <?= $form->field($model, 'kecamatan')->textInput() ?> -->
     <?= $form->field($model, 'kecamatan')->dropDownList(
-        ArrayHelper::map(MasterKec::find()->all(),'id_kec','nm_kec'),
-        ['prompt'=>'Pilih Kecamatan']
+        [],
+        [
+            'prompt'=>'Pilih Kecamatan',
+            'class' => 'dependent-input form-control',
+            'data-next' => 'mitra-desa'
+        ]
     )?>
 
     <!-- <?= $form->field($model, 'desa')->textInput(['maxlength' => true]) ?> -->
     <?= $form->field($model, 'desa')->dropDownList(
-        ArrayHelper::map(MasterDesa::find()->all(),'id_desa','nm_desa'),
+        [],
         ['prompt'=>'Pilih Desa']
     )?>
 
