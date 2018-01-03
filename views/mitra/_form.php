@@ -11,6 +11,7 @@ use app\models\MasterDesa;
 use app\models\Pendidikan;
 use yii\web\View;
 use yii\helpers\Url;
+use app\models\Survei;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Mitra */
@@ -39,6 +40,9 @@ $js = '$(".dependent-input").on("change", function() {
 });';
 // $this->registerJs($js, ['position' => View::POS_HEAD]);
 $this->registerJs($js);
+
+// https://bootsnipp.com/snippets/AXVrV
+
 ?>
 
 <div class="mitra-form">
@@ -106,6 +110,13 @@ $this->registerJs($js);
     )?>
 
     <?= $form->field($model, 'pengalaman_survei')->textarea(['rows' => 6]) ?>
+    <?= Html::dropDownList('s_id', null,
+        ArrayHelper::map(Survei::find()->all(), 'id', 'nama'),
+        [
+            'prompt'=>'Pilih Survei',
+            'class' => 'form-control',
+        ]
+      ) ?>
 
     <!-- <?= $form->field($model, 'penguasaan_kendaraan_motor')->textInput() ?> -->
     <div class="form-group field-mitra-penguasaan_kendaraan_motor required">
