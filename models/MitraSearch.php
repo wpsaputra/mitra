@@ -18,8 +18,8 @@ class MitraSearch extends Mitra
     public function rules()
     {
         return [
-            [['id', 'jenis_kelamin', 'propinsi', 'kabupaten', 'kecamatan', 'no_hp', 'pendidikan', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'id_user'], 'integer'],
-            [['nama', 'tanggal_lahir', 'desa', 'pengalaman_survei', 'foto'], 'safe'],
+            [['id', 'jenis_kelamin', 'propinsi', 'kabupaten', 'kecamatan', 'pendidikan', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'id_user'], 'integer'],
+            [['nama', 'tanggal_lahir', 'desa', 'pengalaman_survei', 'foto', 'no_hp'], 'safe'],
         ];
     }
 

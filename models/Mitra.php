@@ -5,6 +5,13 @@ namespace app\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use borales\extensions\phoneInput\PhoneInputValidator;
+use borales\extensions\phoneInput\PhoneInputBehavior;
+use libphonenumber\PhoneNumberUtil;
+use libphonenumber\NumberParseException;
+use libphonenumber\PhoneNumberFormat;
+use yii\web\HttpException;
+use yii\base\UserException;
 
 /**
  * This is the model class for table "mitra".
@@ -49,6 +56,22 @@ class Mitra extends \yii\db\ActiveRecord
     public function behaviors() {
         
         return [
+            "xyz" => [
+                "class" => PhoneInputBehavior::className(),
+                    "attributes" => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => "no_hp",
+                        ActiveRecord::EVENT_BEFORE_UPDATE => "no_hp",
+                    ],
+                    // "value" => function() { return Yii::$app->formatter->asDate($this->tanggal_lahir, "Y-MM-dd"); }
+                    "value" => function() {
+                        $swissNumberStr = $this->no_hp;
+                        $phoneUtil = PhoneNumberUtil::getInstance();
+                        $swissNumberProto = $phoneUtil->parse($swissNumberStr, "ID");
+                        $formatNumber = $phoneUtil->format($swissNumberProto, PhoneNumberFormat::E164); 
+                        return $formatNumber;
+                    }
+            ],
+            // 'phoneInput' => PhoneInputBehavior::className(),
             "tanggalLahirBeforeSave" => [
                 "class" => TimestampBehavior::className(),
                     "attributes" => [
@@ -62,12 +85,16 @@ class Mitra extends \yii\db\ActiveRecord
                     "attributes" => [
                         ActiveRecord::EVENT_AFTER_FIND => "tanggal_lahir",
                     ],
-                    // "value" => function() { return Yii::$app->formatter->asDate($this->tanggal_fenomena, "M/dd/Y"); }
-                    "value" => function() { return Yii::$app->formatter->asDate($this->tanggal_lahir, "MMM dd, Y"); }
+                    "value" => function() { return Yii::$app->formatter->asDate($this->tanggal_lahir, "M/dd/Y"); }
+                    
             ],
+
+            
         ];
         
     }
+
+
 
     /**
      * @inheritdoc
@@ -76,7 +103,7 @@ class Mitra extends \yii\db\ActiveRecord
     {
         return [
             [['nama', 'jenis_kelamin', 'tanggal_lahir', 'propinsi', 'kabupaten', 'kecamatan', 'desa', 'no_hp', 'pendidikan', 'pengalaman_survei', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'id_user', 'foto'], 'required'],
-            [['jenis_kelamin', 'propinsi', 'kabupaten', 'kecamatan', 'no_hp', 'pendidikan', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'id_user'], 'integer'],
+            [['jenis_kelamin', 'propinsi', 'kabupaten', 'kecamatan', 'pendidikan', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'id_user'], 'integer'],
             [['tanggal_lahir'], 'safe'],
             [['pengalaman_survei', 'foto'], 'string'],
             [['nama'], 'string', 'max' => 256],
@@ -90,6 +117,9 @@ class Mitra extends \yii\db\ActiveRecord
             [['desa'], 'exist', 'skipOnError' => true, 'targetClass' => MasterDesa::className(), 'targetAttribute' => ['desa' => 'id_desa']],
             // custom
             // ['penguasaan_kendaraan_motor', 'in', 'range' => [0, 1, 2, 3, 4, 5]],
+            [['no_hp'], 'string'],
+            // [['no_hp'], PhoneInputValidator::className()],
+            [['no_hp'], PhoneInputValidator::className(), 'region' => ['ID']],
             [['nama'], 'string', 'length' => [4, 24]],
             [['penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya'], 'number', 'min' => 0, 'max' => 5],
         ];

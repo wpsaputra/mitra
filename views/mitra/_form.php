@@ -12,6 +12,10 @@ use app\models\Pendidikan;
 use yii\web\View;
 use yii\helpers\Url;
 use app\models\Survei;
+use borales\extensions\phoneInput\PhoneInput;
+use libphonenumber\PhoneNumberUtil;
+use libphonenumber\PhoneNumberFormat;
+use yii\base\UserException;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Mitra */
@@ -101,7 +105,15 @@ $this->registerJs($js);
         ['prompt'=>'Pilih Desa']
     )?>
 
-    <?= $form->field($model, 'no_hp')->textInput() ?>
+    <!-- <?= $form->field($model, 'no_hp')->textInput() ?> -->
+    <?= $form->field($model, 'no_hp')->widget(PhoneInput::className(), [
+        'jsOptions' => [
+            'allowExtensions' => true,
+            'onlyCountries' => ['id'],
+            'nationalMode' => false,
+        ],
+        'class' => 'form-control',
+    ]); ?>
 
     <!-- <?= $form->field($model, 'pendidikan')->textInput() ?> -->
     <?= $form->field($model, 'pendidikan')->dropDownList(
