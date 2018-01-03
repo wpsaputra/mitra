@@ -63,6 +63,10 @@ class Mitra extends \yii\db\ActiveRecord
             [['kecamatan'], 'exist', 'skipOnError' => true, 'targetClass' => MasterKec::className(), 'targetAttribute' => ['kecamatan' => 'id_kec']],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
             [['desa'], 'exist', 'skipOnError' => true, 'targetClass' => MasterDesa::className(), 'targetAttribute' => ['desa' => 'id_desa']],
+            // custom
+            // ['penguasaan_kendaraan_motor', 'in', 'range' => [0, 1, 2, 3, 4, 5]],
+            [['nama'], 'string', 'length' => [4, 24]],
+            [['penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya'], 'number', 'min' => 0, 'max' => 5],
         ];
     }
 

@@ -74,6 +74,7 @@ $this->registerCssFile('@web/css/custom.css' , ['position' => View::POS_HEAD]);
 
     <?= $form->field($model, 'pengalaman_survei')->textarea(['rows' => 6]) ?>
 
+    <!-- <?= $form->field($model, 'penguasaan_kendaraan_motor')->textInput() ?> -->
     <div class="form-group field-mitra-penguasaan_kendaraan_motor required">
         <label class="control-label" for="mitra-penguasaan_kendaraan_motor">Penguasaan Kendaraan Motor</label>
         <!-- <input id="mitra-penguasaan_kendaraan_motor" class="form-control" name="Mitra[penguasaan_kendaraan_motor]" aria-required="true" type="text"> -->
@@ -86,7 +87,6 @@ $this->registerCssFile('@web/css/custom.css' , ['position' => View::POS_HEAD]);
         </div>
         <div class="help-block"></div>
     </div>
-
 
     <!-- <?= $form->field($model, 'penguasaan_hp_android_ics_keatas')->textInput() ?> -->
     <div class="form-group field-mitra-penguasaan_hp_android_ics_keatas required">
