@@ -74,27 +74,77 @@ $this->registerCssFile('@web/css/custom.css' , ['position' => View::POS_HEAD]);
 
     <?= $form->field($model, 'pengalaman_survei')->textarea(['rows' => 6]) ?>
 
-    <div style="display: none">
-        <?= $form->field($model, 'penguasaan_kendaraan_motor')->textInput() ?>
-    </div>
-    
-    <div class="form-group field-fenomena-upload_foto_dokumen required">
-        <label class="control-label" for="fenomena-upload_foto_dokumen">Upload Foto / Dokumen</label>
-        <div class="dropzone form-group" id="dropzone">
-            <div class="dz-default dz-message"><span>Drop files or click here to upload (jpg, png, pdf)</span></div>
+    <div class="form-group field-mitra-penguasaan_kendaraan_motor required">
+        <label class="control-label" for="mitra-penguasaan_kendaraan_motor">Penguasaan Kendaraan Motor</label>
+        <!-- <input id="mitra-penguasaan_kendaraan_motor" class="form-control" name="Mitra[penguasaan_kendaraan_motor]" aria-required="true" type="text"> -->
+        <div class="input-group spinner" style="width:100%">
+            <input id="mitra-penguasaan_kendaraan_motor" class="form-control" name="Mitra[penguasaan_kendaraan_motor]" aria-required="true" type="text" value="0" min="0" max="5">
+            <div class="input-group-btn-vertical">
+            <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+            <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+            </div>
         </div>
         <div class="help-block"></div>
     </div>
 
 
+    <!-- <?= $form->field($model, 'penguasaan_hp_android_ics_keatas')->textInput() ?> -->
+    <div class="form-group field-mitra-penguasaan_hp_android_ics_keatas required">
+        <label class="control-label" for="mitra-penguasaan_hp_android_ics_keatas">Penguasaan Hp Android Ics Keatas</label>
+        <!-- <input id="mitra-penguasaan_hp_android_ics_keatas" class="form-control" name="Mitra[penguasaan_hp_android_ics_keatas]" aria-required="true" aria-required="true" type="text"> -->
+        <div class="input-group spinner" style="width:100%">
+            <input id="mitra-penguasaan_hp_android_ics_keatas" class="form-control" name="Mitra[penguasaan_hp_android_ics_keatas]" aria-required="true" aria-required="true" type="text" value="0" min="0" max="5">
+            <div class="input-group-btn-vertical">
+            <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+            <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+            </div>
+        </div>
+        <div class="help-block"></div>
+    </div>
 
-    <?= $form->field($model, 'penguasaan_hp_android_ics_keatas')->textInput() ?>
+    <!-- <?= $form->field($model, 'penguasaan_hp_android_ics_kebawah')->textInput() ?> -->
+    <div class="form-group field-mitra-penguasaan_hp_android_ics_kebawah required">
+        <label class="control-label" for="mitra-penguasaan_hp_android_ics_kebawah">Penguasaan Hp Android Ics Kebawah</label>
+        <!-- <input id="mitra-penguasaan_hp_android_ics_kebawah" class="form-control" name="Mitra[penguasaan_hp_android_ics_kebawah]" aria-required="true" type="text"> -->
+        <div class="input-group spinner" style="width:100%">
+            <input id="mitra-penguasaan_hp_android_ics_kebawah" class="form-control" name="Mitra[penguasaan_hp_android_ics_kebawah]" aria-required="true" type="text" value="0" min="0" max="5">
+            <div class="input-group-btn-vertical">
+            <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+            <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+            </div>
+        </div>
+        <div class="help-block"></div>
+    </div>
 
-    <?= $form->field($model, 'penguasaan_hp_android_ics_kebawah')->textInput() ?>
+    <!-- <?= $form->field($model, 'penguasaan_hp_ios')->textInput() ?> -->
+    <div class="form-group field-mitra-penguasaan_hp_ios required">
+        <label class="control-label" for="mitra-penguasaan_hp_ios">Penguasaan Hp Ios</label>
+        <!-- <input id="mitra-penguasaan_hp_ios" class="form-control" name="Mitra[penguasaan_hp_ios]" aria-required="true" type="text"> -->
+        <div class="input-group spinner" style="width:100%">
+            <input id="mitra-penguasaan_hp_ios" class="form-control" name="Mitra[penguasaan_hp_ios]" aria-required="true" type="text" value="0" min="0" max="5">
+            <div class="input-group-btn-vertical">
+            <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+            <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+            </div>
+        </div>
 
-    <?= $form->field($model, 'penguasaan_hp_ios')->textInput() ?>
+        <div class="help-block"></div>
+    </div>
 
-    <?= $form->field($model, 'penguasaan_hp_lainnya')->textInput() ?>
+    <!-- <?= $form->field($model, 'penguasaan_hp_lainnya')->textInput() ?> -->
+    <div class="form-group field-mitra-penguasaan_hp_lainnya required">
+        <label class="control-label" for="mitra-penguasaan_hp_lainnya">Penguasaan Hp Lainnya</label>
+        <!-- <input id="mitra-penguasaan_hp_lainnya" class="form-control" name="Mitra[penguasaan_hp_lainnya]" aria-required="true" type="text"> -->
+        <div class="input-group spinner" style="width:100%">
+            <input id="mitra-penguasaan_hp_lainnya" class="form-control" name="Mitra[penguasaan_hp_lainnya]" aria-required="true" type="text" value="0" min="0" max="5">
+            <div class="input-group-btn-vertical">
+            <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+            <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+            </div>
+        </div>
+
+        <div class="help-block"></div>
+    </div>
 
     <?= $form->field($model, 'id_user')->textInput() ?>
 
