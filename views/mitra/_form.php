@@ -73,7 +73,7 @@ $this->registerJs($js);
 
     <!-- <?= $form->field($model, 'kabupaten')->textInput() ?> -->
     <?= $form->field($model, 'kabupaten')->dropDownList(
-        [],
+        ArrayHelper::map(MasterKab::find()->all(),'id_kab','nm_kab'),
         [
             'prompt'=>'Pilih Kabupaten',
             'class' => 'dependent-input form-control',
@@ -83,7 +83,7 @@ $this->registerJs($js);
 
     <!-- <?= $form->field($model, 'kecamatan')->textInput() ?> -->
     <?= $form->field($model, 'kecamatan')->dropDownList(
-        [],
+        ArrayHelper::map(MasterKec::find()->all(),'id_kec','nm_kec'),
         [
             'prompt'=>'Pilih Kecamatan',
             'class' => 'dependent-input form-control',
@@ -93,7 +93,7 @@ $this->registerJs($js);
 
     <!-- <?= $form->field($model, 'desa')->textInput(['maxlength' => true]) ?> -->
     <?= $form->field($model, 'desa')->dropDownList(
-        [],
+        ArrayHelper::map(MasterDesa::find()->all(),'id_desa','nm_desa'),
         ['prompt'=>'Pilih Desa']
     )?>
 
@@ -112,7 +112,8 @@ $this->registerJs($js);
         <label class="control-label" for="mitra-penguasaan_kendaraan_motor">Penguasaan Kendaraan Motor</label>
         <!-- <input id="mitra-penguasaan_kendaraan_motor" class="form-control" name="Mitra[penguasaan_kendaraan_motor]" aria-required="true" type="text"> -->
         <div class="input-group spinner" style="width:100%">
-            <input id="mitra-penguasaan_kendaraan_motor" class="form-control" name="Mitra[penguasaan_kendaraan_motor]" aria-required="true" type="text" value="0" min="0" max="5">
+            <input id="mitra-penguasaan_kendaraan_motor" class="form-control" name="Mitra[penguasaan_kendaraan_motor]" aria-required="true" 
+                type="text" value="<?=($model->penguasaan_kendaraan_motor) ? $model->penguasaan_kendaraan_motor : 0?>" min="0" max="5">
             <div class="input-group-btn-vertical">
             <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
             <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
@@ -126,7 +127,8 @@ $this->registerJs($js);
         <label class="control-label" for="mitra-penguasaan_hp_android_ics_keatas">Penguasaan Hp Android Ics Keatas</label>
         <!-- <input id="mitra-penguasaan_hp_android_ics_keatas" class="form-control" name="Mitra[penguasaan_hp_android_ics_keatas]" aria-required="true" aria-required="true" type="text"> -->
         <div class="input-group spinner" style="width:100%">
-            <input id="mitra-penguasaan_hp_android_ics_keatas" class="form-control" name="Mitra[penguasaan_hp_android_ics_keatas]" aria-required="true" aria-required="true" type="text" value="0" min="0" max="5">
+            <input id="mitra-penguasaan_hp_android_ics_keatas" class="form-control" name="Mitra[penguasaan_hp_android_ics_keatas]" aria-required="true" aria-required="true" 
+                type="text" value="<?=($model->penguasaan_hp_android_ics_keatas) ? $model->penguasaan_hp_android_ics_keatas : 0?>" min="0" max="5">
             <div class="input-group-btn-vertical">
             <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
             <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
@@ -140,7 +142,8 @@ $this->registerJs($js);
         <label class="control-label" for="mitra-penguasaan_hp_android_ics_kebawah">Penguasaan Hp Android Ics Kebawah</label>
         <!-- <input id="mitra-penguasaan_hp_android_ics_kebawah" class="form-control" name="Mitra[penguasaan_hp_android_ics_kebawah]" aria-required="true" type="text"> -->
         <div class="input-group spinner" style="width:100%">
-            <input id="mitra-penguasaan_hp_android_ics_kebawah" class="form-control" name="Mitra[penguasaan_hp_android_ics_kebawah]" aria-required="true" type="text" value="0" min="0" max="5">
+            <input id="mitra-penguasaan_hp_android_ics_kebawah" class="form-control" name="Mitra[penguasaan_hp_android_ics_kebawah]" aria-required="true" 
+                type="text" value="<?=($model->penguasaan_hp_android_ics_kebawah) ? $model->penguasaan_hp_android_ics_kebawah : 0?>" min="0" max="5">
             <div class="input-group-btn-vertical">
             <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
             <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
@@ -154,7 +157,8 @@ $this->registerJs($js);
         <label class="control-label" for="mitra-penguasaan_hp_ios">Penguasaan Hp Ios</label>
         <!-- <input id="mitra-penguasaan_hp_ios" class="form-control" name="Mitra[penguasaan_hp_ios]" aria-required="true" type="text"> -->
         <div class="input-group spinner" style="width:100%">
-            <input id="mitra-penguasaan_hp_ios" class="form-control" name="Mitra[penguasaan_hp_ios]" aria-required="true" type="text" value="0" min="0" max="5">
+            <input id="mitra-penguasaan_hp_ios" class="form-control" name="Mitra[penguasaan_hp_ios]" aria-required="true" 
+                type="text" value="<?=($model->penguasaan_hp_ios) ? $model->penguasaan_hp_ios : 0?>" min="0" max="5">
             <div class="input-group-btn-vertical">
             <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
             <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
@@ -169,7 +173,8 @@ $this->registerJs($js);
         <label class="control-label" for="mitra-penguasaan_hp_lainnya">Penguasaan Hp Lainnya</label>
         <!-- <input id="mitra-penguasaan_hp_lainnya" class="form-control" name="Mitra[penguasaan_hp_lainnya]" aria-required="true" type="text"> -->
         <div class="input-group spinner" style="width:100%">
-            <input id="mitra-penguasaan_hp_lainnya" class="form-control" name="Mitra[penguasaan_hp_lainnya]" aria-required="true" type="text" value="0" min="0" max="5">
+            <input id="mitra-penguasaan_hp_lainnya" class="form-control" name="Mitra[penguasaan_hp_lainnya]" aria-required="true" 
+                type="text" value="<?=($model->penguasaan_hp_lainnya) ? $model->penguasaan_hp_lainnya : 0?>" min="0" max="5">
             <div class="input-group-btn-vertical">
             <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
             <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>

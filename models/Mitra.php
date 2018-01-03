@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "mitra".
@@ -42,6 +44,29 @@ class Mitra extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'mitra';
+    }
+
+    public function behaviors() {
+        
+        return [
+            "tanggalLahirBeforeSave" => [
+                "class" => TimestampBehavior::className(),
+                    "attributes" => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => "tanggal_lahir",
+                        ActiveRecord::EVENT_BEFORE_UPDATE => "tanggal_lahir",
+                    ],
+                    "value" => function() { return Yii::$app->formatter->asDate($this->tanggal_lahir, "Y-MM-dd"); }
+            ],
+            "tanggalLahirAfterFind" => [
+                   "class" => TimestampBehavior::className(),
+                    "attributes" => [
+                        ActiveRecord::EVENT_AFTER_FIND => "tanggal_lahir",
+                    ],
+                    // "value" => function() { return Yii::$app->formatter->asDate($this->tanggal_fenomena, "M/dd/Y"); }
+                    "value" => function() { return Yii::$app->formatter->asDate($this->tanggal_lahir, "MMM dd, Y"); }
+            ],
+        ];
+        
     }
 
     /**
