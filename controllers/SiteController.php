@@ -9,6 +9,8 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\UploadForm;
+use yii\web\UploadedFile;
 
 class SiteController extends Controller
 {
@@ -123,4 +125,40 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+    
+    // Custom
+    public function actionUpload()
+    {
+        $model = new UploadForm();
+
+        if (Yii::$app->request->isPost) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            $md = $model->upload();
+            if ($md) {
+                // file is uploaded successfully
+                return $md;
+                // print_r($md);
+            }
+        }
+
+        return $this->render('upload', ['model' => $model]);
+    }
+
+    public function actionDelete()
+    {
+        $ds = DIRECTORY_SEPARATOR;  // Store directory separator (DIRECTORY_SEPARATOR) to a simple variable. This is just a personal preference as we hate to type long variable name.
+        $storeFolder = 'uploads'; 
+        
+        $fileList = $_POST['fileList'];
+        // $targetPath = dirname( __FILE__ ) . $ds. $storeFolder . $ds;
+        $targetPath = $storeFolder . $ds;
+        
+        
+        if(isset($fileList)){
+            unlink($targetPath.$fileList);
+        }
+    }
+
+    public function beforeAction($action) { $this->enableCsrfValidation = false; return parent::beforeAction($action); }
 }

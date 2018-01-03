@@ -10,6 +10,7 @@ use app\models\MasterKec;
 use app\models\MasterDesa;
 use app\models\Pendidikan;
 use yii\web\View;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Mitra */
@@ -19,6 +20,8 @@ $this->registerAssetBundle(yii\web\JqueryAsset::className(), View::POS_HEAD);
 $this->registerCssFile('@web/css/font-awesome/css/font-awesome.min.css' , ['position' => View::POS_HEAD]);
 $this->registerCssFile('@web/css/custom.css' , ['position' => View::POS_HEAD]);
 
+$this->registerJsFile('@web/js/dropzone.js' , ['position' => View::POS_BEGIN]);
+$this->registerCssFile('@web/css/dropzone.css' , ['position' => View::POS_HEAD]);
 ?>
 
 <div class="mitra-form">
@@ -147,8 +150,20 @@ $this->registerCssFile('@web/css/custom.css' , ['position' => View::POS_HEAD]);
     </div>
 
     <?= $form->field($model, 'id_user')->textInput() ?>
+    
+    <div style="display: none">
+        <?= $form->field($model, 'foto')->textarea(['rows' => 6]) ?>
+    </div>
 
-    <?= $form->field($model, 'foto')->textarea(['rows' => 6]) ?>
+    <div class="form-group field-mitra-foto required">
+        <label class="control-label" for="mitra-foto">Upload Foto</label>
+        <div class="dropzone form-group" id="dropzone">
+            <div class="dz-default dz-message"><span>Drop files or click here to upload (jpg, jpeg, png)</span></div>
+        </div>
+        <div class="help-block"></div>
+    </div>
+
+
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
@@ -158,41 +173,85 @@ $this->registerCssFile('@web/css/custom.css' , ['position' => View::POS_HEAD]);
 
 </div>
 
-<!-- <i class="fa fa-camera-retro fa-5x"></i> fa-5x -->
-<!-- <div class="col-md-4"> -->
-
-  <!-- <div class="input-group spinner">
-    <input type="text" class="form-control" value="1" min="0" max="5">
-    <div class="input-group-btn-vertical">
-      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-    </div>
-  </div>
-  <p class="help-block">Min 0 - Max 5.</p> -->
-  
-<!-- </div> -->
-
 <script>
     $(function(){
+        $('.spinner .btn:first-of-type').on('click', function() {
+        var btn = $(this);
+        var input = btn.closest('.spinner').find('input');
+        if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {    
+            input.val(parseInt(input.val(), 10) + 1);
+        } else {
+            btn.next("disabled", true);
+        }
+        });
+        $('.spinner .btn:last-of-type').on('click', function() {
+        var btn = $(this);
+        var input = btn.closest('.spinner').find('input');
+        if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {    
+            input.val(parseInt(input.val(), 10) - 1);
+        } else {
+            btn.prev("disabled", true);
+        }
+        });
+    })
 
-    $('.spinner .btn:first-of-type').on('click', function() {
-      var btn = $(this);
-      var input = btn.closest('.spinner').find('input');
-      if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {    
-        input.val(parseInt(input.val(), 10) + 1);
-      } else {
-        btn.next("disabled", true);
-      }
-    });
-    $('.spinner .btn:last-of-type').on('click', function() {
-      var btn = $(this);
-      var input = btn.closest('.spinner').find('input');
-      if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {    
-        input.val(parseInt(input.val(), 10) - 1);
-      } else {
-        btn.prev("disabled", true);
-      }
+    // https://stackoverflow.com/questions/24859005/dropzone-js-how-to-change-file-name-before-uploading-to-folder
+    // https://stackoverflow.com/questions/29910240/get-count-of-selected-files-in-dropzone
+
+    Dropzone.autoDiscover = false;
+    var fileList = new Array;
+    var i = 0;
+
+    $("div#dropzone").dropzone({ 
+        url: "<?php echo Url::to(['site/upload']);?>", 
+        paramName: "UploadForm[imageFile]", // The name that will be used to transfer the file
+        maxFilesize: 100, // MB
+        addRemoveLinks: true,
+        acceptedFiles: "image/jpeg,image/png",
+
+        init: function() {
+            // Hack: Add the dropzone class to the element
+            // $(this.element).addClass("dropzone");
+            this.on("success", function(file, serverFileName) {
+                fileList[i] = {"serverFileName" : serverFileName, "fileName" : file.name,"fileId" : i, "uuid" : file.upload.uuid};
+                console.log(fileList);
+                console.log(file);
+                console.log(file.upload.uuid);
+                i++;
+
+                var result = fileList.map(function(a) {return a.serverFileName;});
+                $("#mitra-foto").text(result);
+
+            });
+
+            this.on("removedfile", function(file) {
+                var rmvFile = "";
+                for(f=0;f<fileList.length;f++){
+
+                    if(fileList[f].fileName == file.name && fileList[f].uuid == file.upload.uuid)
+                    // if(fileList[f].uuid == file.upload.uuid)
+                    {
+                        rmvFile = fileList[f].serverFileName;
+                        fileList.splice(f,1);
+                        i=i-1;
+                    }
+                }
+                if (rmvFile){
+                    $.ajax({
+                        // url: "http://localhost/dropzone/sample/delete_temp_files.php",
+                        url: "<?php echo Url::to(['site/delete']);?>",
+                        type: "POST",
+                        data: { "fileList" : rmvFile }
+                    });
+                }
+                console.log(fileList);
+                var result = fileList.map(function(a) {return a.serverFileName;});
+                $("#mitra-foto").text(result);
+            });
+        },
+    
+    
     });
 
-})
+
 </script>
