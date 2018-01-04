@@ -12,6 +12,7 @@ use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
 use yii\web\HttpException;
 use yii\base\UserException;
+use yii\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "mitra".
@@ -90,6 +91,12 @@ class Mitra extends \yii\db\ActiveRecord
                     
             ],
 
+            [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'id_user',
+                'updatedByAttribute' => 'id_user',
+            ],
+
             
         ];
         
@@ -101,9 +108,9 @@ class Mitra extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nama', 'jenis_kelamin', 'tanggal_lahir', 'propinsi', 'kabupaten', 'kecamatan', 'desa', 'no_hp', 'pendidikan', 'pengalaman_survei', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'id_user', 'foto', 'rating'], 'required'],
+            [['nama', 'jenis_kelamin', 'tanggal_lahir', 'propinsi', 'kabupaten', 'kecamatan', 'desa', 'no_hp', 'pendidikan', 'pengalaman_survei', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'foto', 'rating'], 'required'],
             [['jenis_kelamin', 'propinsi', 'kabupaten', 'kecamatan', 'pendidikan', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'id_user'], 'integer'],
-            [['tanggal_lahir'], 'safe'],
+            [['tanggal_lahir', 'id_user'], 'safe'],
             [['pengalaman_survei', 'foto'], 'string'],
             [['rating'], 'number'],
             [['nama'], 'string', 'max' => 256],

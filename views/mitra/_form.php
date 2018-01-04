@@ -230,7 +230,7 @@ $this->registerJs($js);
         <div class="help-block"></div>
     </div>
 
-    <?= $form->field($model, 'id_user')->textInput() ?>
+    <!-- <?= $form->field($model, 'id_user')->textInput() ?> -->
     
     <div style="display: none">
         <?= $form->field($model, 'foto')->textarea(['rows' => 6]) ?>
