@@ -46,6 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'penguasaan_hp_lainnya',
             'id_user',
             'foto:ntext',
+            'rating',
         ],
     ]) ?>
 

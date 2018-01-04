@@ -24,7 +24,7 @@ use yii\base\UserException;
  * @property int $kabupaten
  * @property int $kecamatan
  * @property string $desa
- * @property string $no_hp
+ * @property int $no_hp
  * @property int $pendidikan
  * @property string $pengalaman_survei
  * @property int $penguasaan_kendaraan_motor
@@ -34,7 +34,6 @@ use yii\base\UserException;
  * @property int $penguasaan_hp_lainnya
  * @property int $id_user
  * @property string $foto
- * @property double $rating
  *
  * @property Pendidikan $pendidikan0
  * @property JenisKelamin $jenisKelamin
@@ -95,20 +94,20 @@ class Mitra extends \yii\db\ActiveRecord
         
     }
 
+
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['nama', 'jenis_kelamin', 'tanggal_lahir', 'propinsi', 'kabupaten', 'kecamatan', 'desa', 'no_hp', 'pendidikan', 'pengalaman_survei', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'id_user', 'foto', 'rating'], 'required'],
+            [['nama', 'jenis_kelamin', 'tanggal_lahir', 'propinsi', 'kabupaten', 'kecamatan', 'desa', 'no_hp', 'pendidikan', 'pengalaman_survei', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'id_user', 'foto'], 'required'],
             [['jenis_kelamin', 'propinsi', 'kabupaten', 'kecamatan', 'pendidikan', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'id_user'], 'integer'],
             [['tanggal_lahir'], 'safe'],
             [['pengalaman_survei', 'foto'], 'string'],
-            [['rating'], 'number'],
             [['nama'], 'string', 'max' => 256],
             [['desa'], 'string', 'max' => 10],
-            [['no_hp'], 'string', 'max' => 20],
             [['pendidikan'], 'exist', 'skipOnError' => true, 'targetClass' => Pendidikan::className(), 'targetAttribute' => ['pendidikan' => 'id']],
             [['jenis_kelamin'], 'exist', 'skipOnError' => true, 'targetClass' => JenisKelamin::className(), 'targetAttribute' => ['jenis_kelamin' => 'id']],
             [['propinsi'], 'exist', 'skipOnError' => true, 'targetClass' => MasterProp::className(), 'targetAttribute' => ['propinsi' => 'id_prop']],
@@ -122,7 +121,7 @@ class Mitra extends \yii\db\ActiveRecord
             // [['no_hp'], PhoneInputValidator::className()],
             [['no_hp'], PhoneInputValidator::className(), 'region' => ['ID']],
             [['nama'], 'string', 'length' => [4, 24]],
-            [['penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'rating'], 'number', 'min' => 0, 'max' => 5],
+            [['penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya'], 'number', 'min' => 0, 'max' => 5],
         ];
     }
 
@@ -150,7 +149,6 @@ class Mitra extends \yii\db\ActiveRecord
             'penguasaan_hp_lainnya' => 'Penguasaan Hp Lainnya',
             'id_user' => 'Id User',
             'foto' => 'Foto',
-            'rating' => 'Rating',
         ];
     }
 

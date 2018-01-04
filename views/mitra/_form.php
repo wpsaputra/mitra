@@ -16,6 +16,7 @@ use borales\extensions\phoneInput\PhoneInput;
 use libphonenumber\PhoneNumberUtil;
 use libphonenumber\PhoneNumberFormat;
 use yii\base\UserException;
+use kartik\rating\StarRating;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Mitra */
@@ -53,7 +54,7 @@ $this->registerJs($js);
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'style'=>'text-transform: uppercase']) ?>
 
     <!-- <?= $form->field($model, 'jenis_kelamin')->textInput() ?> -->
     <?= $form->field($model, 'jenis_kelamin')->dropDownList(
@@ -247,6 +248,10 @@ $this->registerJs($js);
         </div>
         <div class="help-block"></div>
     </div>
+
+    <?= $form->field($model, 'rating')->widget(StarRating::classname(), [
+        'pluginOptions' => ['size'=>'lg']
+    ]);?>
 
 
 
