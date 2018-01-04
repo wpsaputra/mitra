@@ -8,6 +8,7 @@ use app\models\MitraSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * MitraController implements the CRUD actions for Mitra model.
@@ -20,6 +21,19 @@ class MitraController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'view', 'create', 'update', 'delete', 'list'],
+                'rules' => [
+                    [
+                        // 'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+
+
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
