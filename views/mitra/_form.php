@@ -134,16 +134,21 @@ $this->registerJs($js);
         <label class="control-label" for="mitra-pengalaman_survei">Pengalaman Survei</label>
         <!-- <textarea id="mitra-pengalaman_survei" class="form-control" name="Mitra[pengalaman_survei]" rows="6" aria-required="true">gdgdg</textarea> -->
         <div id="list-survei">
-            <div class="input-group">
-                <select class="form-control" id="educationDate" name="educationDate[]">
-                    <option value="">Date</option>
-                    <option value="2015">2015</option>
-                    <option value="2016">2016</option>
-                    <option value="2017">2017</option>
-                    <option value="2018">2018</option>
-                </select>
-                <div class="input-group-btn">
-                    <button class="btn btn-success" type="button" onclick="education_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+            <div class="form-group">
+                <div class="input-group">
+                    <select class="form-control surveilist" id="educationDate" name="educationDate[]" onchange="list_survei();">
+                        <option value="">Pilih Survei</option>
+                        <?php
+                            $arr = ArrayHelper::map(Survei::find()->all(), 'id', 'nama');
+                            foreach($arr as $key => $item){
+                                echo '<option value="'.$key.'">'.$item.'</option>';
+                            }
+                        
+                        ?>
+                    </select>
+                    <div class="input-group-btn">
+                        <button class="btn btn-success" type="button" onclick="education_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -253,57 +258,6 @@ $this->registerJs($js);
 
 </div>
 
-<!-- bootsnip -->
-<div class="panel panel-default">
-  <div class="panel-heading">Dynamic Form Fields - Add & Remove Multiple fields</div>
-  <div class="panel-heading">Education Experience</div>
-  <div class="panel-body">
-  
-  <div id="education_fields">
-          
-        </div>
-       <div class="col-sm-3 nopadding">
-  <div class="form-group">
-    <input type="text" class="form-control" id="Schoolname" name="Schoolname[]" value="" placeholder="School name">
-  </div>
-</div>
-<div class="col-sm-3 nopadding">
-  <div class="form-group">
-    <input type="text" class="form-control" id="Major" name="Major[]" value="" placeholder="Major">
-  </div>
-</div>
-<div class="col-sm-3 nopadding">
-  <div class="form-group">
-    <input type="text" class="form-control" id="Degree" name="Degree[]" value="" placeholder="Degree">
-  </div>
-</div>
-
-<div class="col-sm-3 nopadding">
-  <div class="form-group">
-    <div class="input-group">
-      <select class="form-control" id="educationDate" name="educationDate[]">
-      
-        <option value="">Date</option>
-        <option value="2015">2015</option>
-        <option value="2016">2016</option>
-        <option value="2017">2017</option>
-        <option value="2018">2018</option>
-      </select>
-      <div class="input-group-btn">
-        <button class="btn btn-success" type="button"  onclick="education_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="clear"></div>
-  
-  </div>
-  <div class="panel-footer"><small>Press <span class="glyphicon glyphicon-plus gs"></span> to add another form field :)</small>, <small>Press <span class="glyphicon glyphicon-minus gs"></span> to remove form field :)</small></div>
-  <div class="panel-footer"><small><em><a href="http://shafi.info/">More Info - Developer Shafi (Bangladesh)</a></em></em></small></div>
-</div>
-
-
-
 <script>
     $(function(){
         $('.spinner .btn:first-of-type').on('click', function() {
@@ -394,13 +348,74 @@ $this->registerJs($js);
         var divtest = document.createElement("div");
         divtest.setAttribute("class", "form-group removeclass"+room);
         var rdiv = 'removeclass'+room;
-        divtest.innerHTML = '<div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Schoolname" name="Schoolname[]" value="" placeholder="School name"></div></div><div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Major" name="Major[]" value="" placeholder="Major"></div></div><div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Degree" name="Degree[]" value="" placeholder="Degree"></div></div><div class="col-sm-3 nopadding"><div class="form-group"><div class="input-group"> <select class="form-control" id="educationDate" name="educationDate[]"><option value="">Date</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option> </select><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_education_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div></div></div><div class="clear"></div>';
+        // divtest.innerHTML = '<div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Schoolname" name="Schoolname[]" value="" placeholder="School name"></div></div><div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Major" name="Major[]" value="" placeholder="Major"></div></div><div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Degree" name="Degree[]" value="" placeholder="Degree"></div></div><div class="col-sm-3 nopadding"><div class="form-group"><div class="input-group"> <select class="form-control" id="educationDate" name="educationDate[]"><option value="">Date</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option> </select><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_education_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div></div></div><div class="clear"></div>';
+        // divtest.innerHTML = 
+        // '
+        //     <div class="input-group">
+        //         <select class="form-control" id="educationDate" name="educationDate[]">
+        //             <option value="">Date</option>
+        //             <option value="2015">2015</option>
+        //             <option value="2016">2016</option>
+        //             <option value="2017">2017</option>
+        //             <option value="2018">2018</option>
+        //         </select>
+        //         <div class="input-group-btn">
+        //             <button class="btn btn-success" type="button" onclick="remove_education_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+        //         </div>
+        //     </div>
+        // ';
+
+        // divtest.innerHTML = '<div class="input-group"><select class="form-control" id="educationDate" name="educationDate[]"><option value="">Date</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option></select><div class="input-group-btn"><button class="btn btn-danger" type="button" onclick="remove_education_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div>';
+        divtest.innerHTML = '<div class="input-group"><select onchange="list_survei();" class="form-control surveilist" id="educationDate" name="educationDate[]"><option value="">Pilih Survei</option><?php
+                            $arr = ArrayHelper::map(Survei::find()->all(), 'id', 'nama');
+                            foreach($arr as $key => $item){
+                                echo '<option value="'.$key.'">'.$item.'</option>';
+                            }
+                        
+                        ?></select><div class="input-group-btn"><button class="btn btn-danger" type="button" onclick="remove_education_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div>';
         
         objTo.appendChild(divtest)
     }
     function remove_education_fields(rid) {
         $('.removeclass'+rid).remove();
     }
+
+    // On Change Update Survei List
+    function list_survei(){
+        // $('.surveilist').each(function(i, obj) {
+        //     //test
+        //     // console.log(i+" "+$('this :selected').text());
+        //     console.log(obj);
+        // });
+
+        // var selectedValues = $(".surveilist").map(function(){
+        //     return this.value;
+        // }).get().filter(Boolean).join(',');
+
+        var selectedValues = $(".surveilist").map(function(){
+            return this.value;
+        }).get().filter(Boolean);
+
+        var uniqueNames = [];
+        $.each(selectedValues, function(i, el){
+            if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
+        });
+
+        selectedValues = uniqueNames.join(',');
+
+        // selectedValues = selectedValues.replace(/^(?:[\s+]|"[|-]")+/, '')
+        //     .replace(/(?:[\s+]|"[|-]")+$/, '')
+        //     .replace(/(?:[\s+]|"[|-]")+/g, ',');
+        
+        // selectedValues.replace(/^[\s,]+|[\s,]+$/g, '').split(",");
+
+        console.log(selectedValues);
+
+        $("#mitra-pengalaman_survei").val(selectedValues);
+
+        }
+
+
 
 
 </script>
