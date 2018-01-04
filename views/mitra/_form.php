@@ -122,14 +122,9 @@ $this->registerJs($js);
         ['prompt'=>'Pilih Pendidikan']
     )?>
 
-    <?= $form->field($model, 'pengalaman_survei')->textarea(['rows' => 6]) ?>
-    <!-- <?= Html::dropDownList('s_id', null,
-        ArrayHelper::map(Survei::find()->all(), 'id', 'nama'),
-        [
-            'prompt'=>'Pilih Survei',
-            'class' => 'form-control',
-        ]
-      ) ?> -->
+    <div style="display: none">
+        <?= $form->field($model, 'pengalaman_survei')->textarea(['rows' => 6]) ?>
+    </div>
 
     <div class="form-group field-mitra-pengalaman_survei required">
         <label class="control-label" for="mitra-pengalaman_survei">Pengalaman Survei</label>
@@ -264,6 +259,7 @@ $this->registerJs($js);
 </div>
 
 <script>
+    // Penguasaan kendaraan
     $(function(){
         $('.spinner .btn:first-of-type').on('click', function() {
         var btn = $(this);
@@ -287,6 +283,8 @@ $this->registerJs($js);
 
     // https://stackoverflow.com/questions/24859005/dropzone-js-how-to-change-file-name-before-uploading-to-folder
     // https://stackoverflow.com/questions/29910240/get-count-of-selected-files-in-dropzone
+
+    // Dropzone
 
     Dropzone.autoDiscover = false;
     var fileList = new Array;
@@ -343,7 +341,7 @@ $this->registerJs($js);
     
     });
 
-    // bootsnip
+    // bootsnip survei list
     var room = 1;
     function education_fields() {
     
