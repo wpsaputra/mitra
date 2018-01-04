@@ -245,7 +245,7 @@ $this->registerJs($js);
     </div>
 
     <?= $form->field($model, 'rating')->widget(StarRating::classname(), [
-        'pluginOptions' => ['size'=>'lg']
+        'pluginOptions' => ['size'=>'sm']
     ]);?>
 
 

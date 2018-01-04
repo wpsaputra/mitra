@@ -244,7 +244,7 @@ $this->registerJs($js);
     </div>
 
     <?= $form->field($model, 'rating')->widget(StarRating::classname(), [
-        'pluginOptions' => ['size'=>'lg']
+        'pluginOptions' => ['size'=>'sm']
     ]);?>
 
 
@@ -467,16 +467,6 @@ $this->registerJs($js);
         return divtest.childNodes[0].childNodes[0];
     }
 
-    
-
-    // function setSelectedValue(selectObj, valueToSet) {
-    //     for (var i = 0; i < selectObj.options.length; i++) {
-    //         if (selectObj.options[i].text== valueToSet) {
-    //             selectObj.options[i].selected = true;
-    //             return;
-    //         }
-    //     }
-    // }
 
     var srv = $("#mitra-pengalaman_survei").text();
     if(srv==""){
