@@ -53,7 +53,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'tanggal_lahir',
-            // 'propinsi',
             [
                 'attribute' => 'propinsi',
                 'value' => function($model){
@@ -104,11 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     foreach ($arr as $key => $value) {
                         array_push($temp_arr, Survei::findOne($value)->nama);
                     }
-
-
-
                     return implode(",", $temp_arr);
-                    
                 }
             ],
 
@@ -122,7 +117,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'id_user',
                 'value' => function($model){
                     return User::findOne($model->id_user)->username;
-                    
                 }
             ],
             'foto:ntext',

@@ -87,7 +87,7 @@ class Mitra extends \yii\db\ActiveRecord
                     "attributes" => [
                         ActiveRecord::EVENT_AFTER_FIND => "tanggal_lahir",
                     ],
-                    "value" => function() { return Yii::$app->formatter->asDate($this->tanggal_lahir, "M/dd/Y"); }
+                    "value" => function() { return Yii::$app->formatter->asDate($this->tanggal_lahir, "MMM dd, Y"); }
                     
             ],
 
