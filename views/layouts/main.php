@@ -40,9 +40,11 @@ Yii::$app->view->title = 'MITRA';
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Mitra', 'url' => ['/mitra/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Daftar Mitra', 'url' => ['/mitra/index']],
+            ['label' => 'Entri Mitra', 'url' => ['/mitra/create']],
+            ['label' => 'Galeri', 'url' => ['/mitra/list']],
+            // ['label' => 'About', 'url' => ['/site/about']],
+            // ['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
