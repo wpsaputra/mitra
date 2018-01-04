@@ -51,7 +51,6 @@ $this->registerJs($js);
 ?>
 
 <div class="mitra-form">
-
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'style'=>'text-transform: uppercase']) ?>
@@ -132,7 +131,7 @@ $this->registerJs($js);
         <div id="list-survei">
             <div class="form-group">
                 <div class="input-group">
-                    <select class="form-control surveilist" id="educationDate" name="educationDate[]" onchange="list_survei();">
+                    <select class="form-control surveilist" id="excalibur" name="educationDate[]" onchange="list_survei();">
                         <option value="">Pilih Survei</option>
                         <?php
                             $arr = ArrayHelper::map(Survei::find()->all(), 'id', 'nama');
@@ -299,6 +298,64 @@ $this->registerJs($js);
         init: function() {
             // Hack: Add the dropzone class to the element
             // $(this.element).addClass("dropzone");
+            
+            // var mockFile = { name: "myimage.jpg", size: 12345, type: 'image/jpeg' };       
+            
+            // this.options.addedfile.call(this, mockFile);
+            // this.options.thumbnail.call(this, mockFile, "http://localhost:1000/sifeni/web/uploads/1.jpg");
+            // mockFile.previewElement.classList.add('dz-success');
+            // mockFile.previewElement.classList.add('dz-complete');
+
+            // this.emit("addedfile", mockFile);
+            // this.emit("thumbnail", mockFile, "http://localhost:1000/sifeni/web/uploads/1511784770image_1.jpg");
+
+            // var img = new Image();
+            // img.src =  'http://localhost:1000/sifeni/web/uploads/1511784770image_1.jpg';
+            // img.height = 300;
+            // img.width = 300;
+
+            // this.createThumbnailFromUrl(mockFile, 'http://localhost:1000/sifeni/web/uploads/1511784770image_1.jpg');
+
+            var fileserver = $("#mitra-foto").text();
+            if(fileserver==""){
+                fileserver = new Array;
+            }else{
+                fileserver = fileserver.split(",");
+            }
+
+            for(f=0;f<fileserver.length;f++){
+                let mockFile = {
+                    name: fileserver[f],
+                    size: 12345,
+                    dataURL: '<?php echo Url::to('@web/uploads/')?>'+fileserver[f],
+                };
+                console.log("Mock FILE"+mockFile);
+
+
+                let xdr = this;
+                
+                this.files.push(mockFile);
+                this.emit('addedfile', mockFile);
+                this.createThumbnailFromUrl(
+                    mockFile,
+                    this.options.thumbnailWidth,
+                    this.options.thumbnailHeight,
+                    this.options.thumbnailMethod,
+                    true,
+                    function(thumbnail) {
+                        xdr.emit('thumbnail', mockFile, thumbnail);
+                        xdr.emit('complete', mockFile);
+                    }
+                );
+                // this.emit('success', mockFile);
+                // console.log("file"+file);
+
+                fileServer = {"serverFileName" : fileserver[f], "fileName" : fileserver[f],"fileId" : i, "uuid" : i};
+                fileList[i] = fileServer;
+                i++;
+
+            }
+
             this.on("success", function(file, serverFileName) {
                 fileList[i] = {"serverFileName" : serverFileName, "fileName" : file.name,"fileId" : i, "uuid" : file.upload.uuid};
                 console.log(fileList);
@@ -315,8 +372,8 @@ $this->registerJs($js);
                 var rmvFile = "";
                 for(f=0;f<fileList.length;f++){
 
-                    if(fileList[f].fileName == file.name && fileList[f].uuid == file.upload.uuid)
-                    // if(fileList[f].uuid == file.upload.uuid)
+                    // if(fileList[f].fileName == file.name && fileList[f].uuid == file.upload.uuid)
+                    if(fileList[f].fileName == file.name)
                     {
                         rmvFile = fileList[f].serverFileName;
                         fileList.splice(f,1);
@@ -326,9 +383,10 @@ $this->registerJs($js);
                 if (rmvFile){
                     $.ajax({
                         // url: "http://localhost/dropzone/sample/delete_temp_files.php",
-                        url: "<?php echo Url::to(['site/delete']);?>",
-                        type: "POST",
-                        data: { "fileList" : rmvFile }
+                        // disable delete
+                        // url: "<?php //echo Url::to(['site/delete']);?>",
+                        // type: "POST",
+                        // data: { "fileList" : rmvFile }
                     });
                 }
                 console.log(fileList);
@@ -381,6 +439,60 @@ $this->registerJs($js);
     function remove_education_fields(rid) {
         $('.removeclass'+rid).remove();
         list_survei();
+    }
+
+    // Update fill value
+    function update_fields(value) {
+        room++;
+        // var objTo = document.getElementById('education_fields')
+        var objTo = document.getElementById('list-survei')
+        var divtest = document.createElement("div");
+        divtest.setAttribute("class", "form-group removeclass"+room);
+        var rdiv = 'removeclass'+room;
+        divtest.innerHTML = '<div class="input-group"><select onchange="list_survei();" class="form-control surveilist" id="educationDate" name="educationDate[]"><option value="">Pilih Survei</option><?php
+                            $arr = ArrayHelper::map(Survei::find()->all(), 'id', 'nama');
+                            foreach($arr as $key => $item){
+                                // if($key==value){
+                                //     echo '<option value="'.$key.'" selected="selected">'.$item.'</option>';
+                                // }else{
+                                //     echo '<option value="'.$key.'">'.$item.'</option>';
+                                // }
+                                echo '<option value="'.$key.'">'.$item.'</option>';
+                            }
+                        
+                        ?></select><div class="input-group-btn"><button class="btn btn-danger" type="button" onclick="remove_education_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div>';
+        
+        objTo.appendChild(divtest)
+        // return divtest;
+        return divtest.childNodes[0].childNodes[0];
+    }
+
+    
+
+    // function setSelectedValue(selectObj, valueToSet) {
+    //     for (var i = 0; i < selectObj.options.length; i++) {
+    //         if (selectObj.options[i].text== valueToSet) {
+    //             selectObj.options[i].selected = true;
+    //             return;
+    //         }
+    //     }
+    // }
+
+    var srv = $("#mitra-pengalaman_survei").text();
+    if(srv==""){
+        srv = new Array;
+    }else{
+        srv = srv.split(",");
+    }
+
+    for(f=0;f<srv.length;f++){
+        if(f==0){
+            $("#excalibur").val(srv[f])
+        }else{
+            var divtest = update_fields(srv[f]);
+            divtest.selectedIndex = srv[f];
+        }
+        // console.log(divtest.childNodes[0].childNodes[0]);
     }
 
 </script>
