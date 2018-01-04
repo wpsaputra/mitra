@@ -126,7 +126,7 @@ $this->registerJs($js);
     </div>
 
     <div class="form-group field-mitra-pengalaman_survei required">
-        <label class="control-label" for="mitra-pengalaman_survei">Pengalaman Survei</label>
+        <label class="control-label" for="mitra-pengalaman_survei">Pengalaman Survei di BPS</label>
         <!-- <textarea id="mitra-pengalaman_survei" class="form-control" name="Mitra[pengalaman_survei]" rows="6" aria-required="true">gdgdg</textarea> -->
         <div id="list-survei">
             <div class="form-group">
@@ -169,7 +169,7 @@ $this->registerJs($js);
 
     <!-- <?= $form->field($model, 'penguasaan_hp_android_ics_keatas')->textInput() ?> -->
     <div class="form-group field-mitra-penguasaan_hp_android_ics_keatas required">
-        <label class="control-label" for="mitra-penguasaan_hp_android_ics_keatas">Penguasaan Hp Android Ics Keatas</label>
+        <label class="control-label" for="mitra-penguasaan_hp_android_ics_keatas">Penguasaan HP Android Versi Ice Cream Sandwich Keatas (termasuk ics)</label>
         <!-- <input id="mitra-penguasaan_hp_android_ics_keatas" class="form-control" name="Mitra[penguasaan_hp_android_ics_keatas]" aria-required="true" aria-required="true" type="text"> -->
         <div class="input-group spinner" style="width:100%">
             <input id="mitra-penguasaan_hp_android_ics_keatas" class="form-control" name="Mitra[penguasaan_hp_android_ics_keatas]" aria-required="true" aria-required="true" 
@@ -184,7 +184,7 @@ $this->registerJs($js);
 
     <!-- <?= $form->field($model, 'penguasaan_hp_android_ics_kebawah')->textInput() ?> -->
     <div class="form-group field-mitra-penguasaan_hp_android_ics_kebawah required">
-        <label class="control-label" for="mitra-penguasaan_hp_android_ics_kebawah">Penguasaan Hp Android Ics Kebawah</label>
+        <label class="control-label" for="mitra-penguasaan_hp_android_ics_kebawah">Penguasaan HP Android versi Ice Cream Sandwich Kebawah</label>
         <!-- <input id="mitra-penguasaan_hp_android_ics_kebawah" class="form-control" name="Mitra[penguasaan_hp_android_ics_kebawah]" aria-required="true" type="text"> -->
         <div class="input-group spinner" style="width:100%">
             <input id="mitra-penguasaan_hp_android_ics_kebawah" class="form-control" name="Mitra[penguasaan_hp_android_ics_kebawah]" aria-required="true" 
@@ -199,7 +199,7 @@ $this->registerJs($js);
 
     <!-- <?= $form->field($model, 'penguasaan_hp_ios')->textInput() ?> -->
     <div class="form-group field-mitra-penguasaan_hp_ios required">
-        <label class="control-label" for="mitra-penguasaan_hp_ios">Penguasaan Hp Ios</label>
+        <label class="control-label" for="mitra-penguasaan_hp_ios">Penguasaan HP Apple/IOS</label>
         <!-- <input id="mitra-penguasaan_hp_ios" class="form-control" name="Mitra[penguasaan_hp_ios]" aria-required="true" type="text"> -->
         <div class="input-group spinner" style="width:100%">
             <input id="mitra-penguasaan_hp_ios" class="form-control" name="Mitra[penguasaan_hp_ios]" aria-required="true" 
@@ -215,7 +215,7 @@ $this->registerJs($js);
 
     <!-- <?= $form->field($model, 'penguasaan_hp_lainnya')->textInput() ?> -->
     <div class="form-group field-mitra-penguasaan_hp_lainnya required">
-        <label class="control-label" for="mitra-penguasaan_hp_lainnya">Penguasaan Hp Lainnya</label>
+        <label class="control-label" for="mitra-penguasaan_hp_lainnya">Penguasaan HP Lainnya</label>
         <!-- <input id="mitra-penguasaan_hp_lainnya" class="form-control" name="Mitra[penguasaan_hp_lainnya]" aria-required="true" type="text"> -->
         <div class="input-group spinner" style="width:100%">
             <input id="mitra-penguasaan_hp_lainnya" class="form-control" name="Mitra[penguasaan_hp_lainnya]" aria-required="true" 
@@ -236,7 +236,7 @@ $this->registerJs($js);
     </div>
 
     <div class="form-group field-mitra-foto required">
-        <label class="control-label" for="mitra-foto">Upload Foto</label>
+        <label class="control-label" for="mitra-foto">Foto Mitra & KTP</label>
         <div class="dropzone form-group" id="dropzone">
             <div class="dz-default dz-message"><span>Drop files or click here to upload (jpg, jpeg, png)</span></div>
         </div>
