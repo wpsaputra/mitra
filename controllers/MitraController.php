@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\HttpException;
 
 /**
  * MitraController implements the CRUD actions for Mitra model.
@@ -51,6 +52,9 @@ class MitraController extends Controller
     {
         $searchModel = new MitraSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(Yii::$app->user->identity->level!=1){
+            $dataProvider->query->where('id_user = '.Yii::$app->user->identity->getId());
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -66,8 +70,14 @@ class MitraController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        if(Yii::$app->user->identity->level!=1){
+            if($model->id_user!=Yii::$app->user->identity->getId()){
+                throw new HttpException(403, "You are not allowed to perform this action");
+            }
+        }
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -99,6 +109,11 @@ class MitraController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        if(Yii::$app->user->identity->level!=1){
+            if($model->id_user!=Yii::$app->user->identity->getId()){
+                throw new HttpException(403, "You are not allowed to perform this action");
+            }
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
