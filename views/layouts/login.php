@@ -13,7 +13,7 @@ use yii\web\View;
 use yii\helpers\Url;
 
 AppAsset::register($this);
-Yii::$app->view->title = 'SiFeni'; 
+Yii::$app->view->title = 'MITRA'; 
 // Yii::$app->view->title = Yii::$app->user->identity->level; 
 $this->registerCssFile('@web/css/custom_login.css' , ['position' => View::POS_END]);
 ?>
