@@ -50,6 +50,8 @@ class Mitra extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    const SCENARIO_ADMIN = 'admin';
+
     public static function tableName()
     {
         return 'mitra';
@@ -91,8 +93,9 @@ class Mitra extends \yii\db\ActiveRecord
                     
             ],
 
-            [
+            "blame"=>[
                 'class' => BlameableBehavior::className(),
+                // 'class' => CustomBehavior::className(),
                 'createdByAttribute' => 'id_user',
                 'updatedByAttribute' => 'id_user',
             ],
@@ -111,6 +114,7 @@ class Mitra extends \yii\db\ActiveRecord
             [['nama', 'jenis_kelamin', 'tanggal_lahir', 'propinsi', 'kabupaten', 'kecamatan', 'desa', 'no_hp', 'pendidikan', 'pengalaman_survei', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'foto', 'rating'], 'required'],
             [['jenis_kelamin', 'propinsi', 'kabupaten', 'kecamatan', 'pendidikan', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'id_user'], 'integer'],
             [['tanggal_lahir', 'id_user'], 'safe'],
+            [['id_user'], 'required', 'on'=>self::SCENARIO_ADMIN],
             [['pengalaman_survei', 'foto'], 'string'],
             [['rating'], 'number'],
             [['nama'], 'string', 'max' => 256],
@@ -155,7 +159,7 @@ class Mitra extends \yii\db\ActiveRecord
             'penguasaan_hp_android_ics_kebawah' => 'Penguasaan HP Android versi Ice Cream Sandwich Kebawah',
             'penguasaan_hp_ios' => 'Penguasaan HP Apple/IOS',
             'penguasaan_hp_lainnya' => 'Penguasaan HP Jenis Lainnya',
-            'id_user' => 'Id User',
+            'id_user' => 'BPS tempat bertugas',
             'foto' => 'Foto Mitra & KTP',
             'rating' => 'Rating Hasil Pekerjaan Mitra',
         ];

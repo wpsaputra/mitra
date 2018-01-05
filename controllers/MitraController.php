@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\HttpException;
 use yii\data\ActiveDataProvider;
+use yii\behaviors\BlameableBehavior;
 
 /**
  * MitraController implements the CRUD actions for Mitra model.
@@ -91,6 +92,11 @@ class MitraController extends Controller
     {
         $model = new Mitra();
 
+        if(Yii::$app->user->identity->level==1){
+            $model->setScenario(Mitra::SCENARIO_ADMIN);
+            $model->detachBehavior("blame");
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -110,6 +116,11 @@ class MitraController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        if(Yii::$app->user->identity->level==1){
+            $model->setScenario(Mitra::SCENARIO_ADMIN);
+            $model->detachBehavior("blame");
+        }
+
         if(Yii::$app->user->identity->level!=1){
             if($model->id_user!=Yii::$app->user->identity->getId()){
                 throw new HttpException(403, "You are not allowed to perform this action");

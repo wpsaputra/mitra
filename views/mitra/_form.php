@@ -17,6 +17,7 @@ use libphonenumber\PhoneNumberUtil;
 use libphonenumber\PhoneNumberFormat;
 use yii\base\UserException;
 use kartik\rating\StarRating;
+use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Mitra */
@@ -231,6 +232,15 @@ $this->registerJs($js);
     </div>
 
     <!-- <?= $form->field($model, 'id_user')->textInput() ?> -->
+    <?php
+        if(Yii::$app->user->identity->level==1){
+            // echo $form->field($model, 'id_user')->textInput();
+            echo $form->field($model, 'id_user')->dropDownList(
+                ArrayHelper::map(User::find()->all(),'id','alias'),
+                ['prompt'=>'Pilih BPS tempat bertugas']);
+        } 
+    
+    ?>
     
     <div style="display: none">
         <?= $form->field($model, 'foto')->textarea(['rows' => 6]) ?>
