@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\HttpException;
+use yii\data\ActiveDataProvider;
 
 /**
  * MitraController implements the CRUD actions for Mitra model.
@@ -156,7 +157,27 @@ class MitraController extends Controller
 
     public function actionList()
     {
+        if(Yii::$app->user->identity->level==1){
+            $dataProvider = new ActiveDataProvider([
+                // 'query' => Fenomena::find()->where(['isVerified'=>1]),
+                'query' => Mitra::find(),
+                'pagination' => [
+                    'pageSize' => 9,
+                ],
+            ]);
+        }else{
+            $dataProvider = new ActiveDataProvider([
+                'query' => Mitra::find()->where(['id_user'=>Yii::$app->user->identity->getId()]),
+                // 'query' => Mitra::find(),
+                'pagination' => [
+                    'pageSize' => 9,
+                ],
+            ]);
+        }
+
+        
         return $this->render('list', [
+            'dataProvider' => $dataProvider,
             
         ]);
     }

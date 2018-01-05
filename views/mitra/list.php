@@ -4,13 +4,7 @@ use yii\data\ActiveDataProvider;
 use app\models\Mitra;
 // use app\models\Fenomena;
 
-$dataProvider = new ActiveDataProvider([
-    // 'query' => Fenomena::find()->where(['isVerified'=>1]),
-    'query' => Mitra::find(),
-    'pagination' => [
-        'pageSize' => 9,
-    ],
-]);
+
 ?>
 
 <div class="post">
