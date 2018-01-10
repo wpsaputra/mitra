@@ -157,7 +157,7 @@ class SiteController extends Controller
 
         if (Yii::$app->request->isPost) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            $md = $model->upload();
+            $md = $model->uploadExcel();
             if ($md) {
                 // file is uploaded successfully
                 return $md;

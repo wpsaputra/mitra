@@ -29,4 +29,33 @@ class UploadForm extends Model
                 return false;
             }
         }
+
+        public function uploadExcel(){
+            $fileName = $this->upload();
+
+            if($fileName){
+                // https://stackoverflow.com/questions/32221000/phpexcel-convert-xls-to-csv-with-special-characters
+                $reader = \PHPExcel_IOFactory::createReader('Excel5');
+                $reader->setReadDataOnly(false);
+                $path = 'uploads/'.$fileName;
+                $excel = $reader->load($path);
+    
+                $writer = \PHPExcel_IOFactory::createWriter($excel, 'CSV');
+                $writer->setUseBOM(true);
+                $writer->save($path.".csv");
+
+                \Yii::$app->db->createCommand('LOAD DATA INFILE :path
+					INTO TABLE `mitra`
+					FIELDS TERMINATED BY \',\'
+					ENCLOSED BY \'"\'
+					LINES TERMINATED BY \'\n\'
+                    IGNORE 1 LINES;')->bindValues([':path'=>\Yii::$app->basePath."/web/uploads/".$fileName.".csv"])->execute();
+                
+                unlink($path);
+                unlink($path.".csv");
+    
+            }
+            return $fileName;
+            
+        }
 }
