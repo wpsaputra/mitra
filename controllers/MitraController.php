@@ -106,6 +106,14 @@ class MitraController extends Controller
         ]);
     }
 
+    public function actionExcel()
+    {
+        $model = new Mitra();
+        return $this->render('excel', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * Updates an existing Mitra model.
      * If update is successful, the browser will be redirected to the 'view' page.

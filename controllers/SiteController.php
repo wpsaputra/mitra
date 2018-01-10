@@ -151,6 +151,23 @@ class SiteController extends Controller
         return $this->render('upload', ['model' => $model]);
     }
 
+    public function actionUploadexcel()
+    {
+        $model = new UploadForm();
+
+        if (Yii::$app->request->isPost) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            $md = $model->upload();
+            if ($md) {
+                // file is uploaded successfully
+                return $md;
+                // print_r($md);
+            }
+        }
+
+        return $this->render('upload', ['model' => $model]);
+    }
+
     public function actionDelete()
     {
         $ds = DIRECTORY_SEPARATOR;  // Store directory separator (DIRECTORY_SEPARATOR) to a simple variable. This is just a personal preference as we hate to type long variable name.

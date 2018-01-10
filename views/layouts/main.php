@@ -42,6 +42,7 @@ Yii::$app->view->title = 'MITRA';
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Daftar Mitra', 'url' => ['/mitra/index']],
             ['label' => 'Entri Mitra', 'url' => ['/mitra/create']],
+            ['label' => 'Excel Mitra', 'url' => ['/mitra/excel']],
             ['label' => 'Galeri', 'url' => ['/mitra/list']],
             // ['label' => 'About', 'url' => ['/site/about']],
             // ['label' => 'Contact', 'url' => ['/site/contact']],
