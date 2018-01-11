@@ -99,10 +99,7 @@ class Mitra extends \yii\db\ActiveRecord
                 'createdByAttribute' => 'id_user',
                 'updatedByAttribute' => 'id_user',
             ],
-
-            
         ];
-        
     }
 
     /**
@@ -111,7 +108,7 @@ class Mitra extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nama', 'jenis_kelamin', 'tanggal_lahir', 'propinsi', 'kabupaten', 'kecamatan', 'desa', 'no_hp', 'pendidikan', 'pengalaman_survei', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'foto', 'rating'], 'required'],
+            [['nama', 'jenis_kelamin', 'tanggal_lahir','propinsi', 'kabupaten', 'kecamatan', 'desa', 'no_hp', 'pendidikan', 'pengalaman_survei', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'foto', 'rating'], 'required'],
             [['jenis_kelamin', 'propinsi', 'kabupaten', 'kecamatan', 'pendidikan', 'penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'id_user'], 'integer'],
             [['tanggal_lahir', 'id_user'], 'safe'],
             [['id_user'], 'required', 'on'=>self::SCENARIO_ADMIN],
@@ -130,11 +127,23 @@ class Mitra extends \yii\db\ActiveRecord
             // custom
             // ['penguasaan_kendaraan_motor', 'in', 'range' => [0, 1, 2, 3, 4, 5]],
             [['no_hp'], 'string'],
+            [['tanggal_lahir'], 'validateTanggalLahir'],
             // [['no_hp'], PhoneInputValidator::className()],
             [['no_hp'], PhoneInputValidator::className(), 'region' => ['ID']],
             [['nama'], 'string', 'length' => [4, 24]],
             [['penguasaan_kendaraan_motor', 'penguasaan_hp_android_ics_keatas', 'penguasaan_hp_android_ics_kebawah', 'penguasaan_hp_ios', 'penguasaan_hp_lainnya', 'rating'], 'number', 'min' => 0, 'max' => 5],
         ];
+    }
+
+    public function validateTanggalLahir($attribute, $params, $validator)
+    {
+        $tanggal_lahir = \DateTime::createFromFormat('M j, Y', $this->tanggal_lahir);
+        $tanggal_now = new \DateTime();
+        $age = $tanggal_now->format("Y") - $tanggal_lahir->format("Y");
+
+        if($age < 17){
+            $this->addError($attribute, 'Umur mitra harus 17 tahun ke atas');
+        }
     }
 
     /**

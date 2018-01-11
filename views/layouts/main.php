@@ -40,7 +40,7 @@ Yii::$app->view->title = 'MITRA';
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Daftar Mitra', 'url' => ['/mitra/index']],
+            ['label' => 'Daftar Mitra', 'url' => ['/mitra/index', 'per-page' => 5]],
             ['label' => 'Entri Mitra', 'url' => ['/mitra/create']],
             ['label' => 'Excel Mitra', 'url' => ['/mitra/excel']],
             ['label' => 'Galeri', 'url' => ['/mitra/list']],
