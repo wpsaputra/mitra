@@ -73,7 +73,9 @@ $this->registerCssFile('@web/css/dropzone.css' , ['position' => View::POS_HEAD])
         maxFilesize: 100, // MB
         addRemoveLinks: true,
         // acceptedFiles: "image/jpeg,image/png,application/vnd.ms-excel",
-        acceptedFiles: "application/vnd.ms-excel",
+        // acceptedFiles: "application/vnd.ms-excel, application/xlsx",
+        // acceptedFiles: "'image/jpeg', 'image/png','image/jpg','application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/docx','application/pdf','text/plain','application/msword','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'",
+        acceptedFiles: "application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 
         init: function() {
             // Hack: Add the dropzone class to the element

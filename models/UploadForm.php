@@ -35,9 +35,16 @@ class UploadForm extends Model
 
             if($fileName){
                 // https://stackoverflow.com/questions/32221000/phpexcel-convert-xls-to-csv-with-special-characters
-                $reader = \PHPExcel_IOFactory::createReader('Excel5');
-                $reader->setReadDataOnly(false);
+                ini_set('memory_limit', '1024M'); // or you could use 1G
+
+
                 $path = 'uploads/'.$fileName;
+                $inputFileType = \PHPExcel_IOFactory::identify($path);
+
+                // $reader = \PHPExcel_IOFactory::createReader('Excel5');
+                $reader = \PHPExcel_IOFactory::createReaderForFile($path);
+                // $reader = \PHPExcel_IOFactory::createReader($inputFileType);
+                $reader->setReadDataOnly(false);
                 $excel = $reader->load($path);
     
                 $writer = \PHPExcel_IOFactory::createWriter($excel, 'CSV');
@@ -51,36 +58,36 @@ class UploadForm extends Model
 				// 	LINES TERMINATED BY \'\n\'
                 //     IGNORE 1 LINES;')->bindValues([':path'=>\Yii::$app->basePath."/web/uploads/".$fileName.".csv"])->execute();
 
-                ini_set('max_execution_time', 300);
-                $row = 1;
-                $dokumen = 'mitra';
-				if (($handle = fopen(\Yii::$app->basePath."/web/uploads/".$fileName.".csv", "r")) !== FALSE) {
-					while (($data = fgetcsv($handle, 2000, ",")) !== FALSE) {
-                        $num = count($data);
+                // ini_set('max_execution_time', 300);
+                // $row = 1;
+                // $dokumen = 'mitra';
+				// if (($handle = fopen(\Yii::$app->basePath."/web/uploads/".$fileName.".csv", "r")) !== FALSE) {
+				// 	while (($data = fgetcsv($handle, 2000, ",")) !== FALSE) {
+                //         $num = count($data);
                         
-                        $row++;
-                        if($row==2){
-                            continue;
-                        }
+                //         $row++;
+                //         if($row==2){
+                //             continue;
+                //         }
 
-                        $arr_value = array();
-                        $cmd = "REPLACE INTO ".$dokumen." VALUES (";
-                        for ($c=0; $c < $num; $c++) {
-                            if($c==$num-1){
-                                $cmd = $cmd.":data".$c;
-                            }else{
-                                $cmd = $cmd.":data".$c.", ";
-                            }
-                            $arr_value[":data".$c] = $data[$c];
-                        }
-                        $cmd = $cmd.")";
-                        \Yii::$app->db->createCommand($cmd)->bindValues($arr_value)->execute();
-					}
-					fclose($handle);
-				}
+                //         $arr_value = array();
+                //         $cmd = "REPLACE INTO ".$dokumen." VALUES (";
+                //         for ($c=0; $c < $num; $c++) {
+                //             if($c==$num-1){
+                //                 $cmd = $cmd.":data".$c;
+                //             }else{
+                //                 $cmd = $cmd.":data".$c.", ";
+                //             }
+                //             $arr_value[":data".$c] = $data[$c];
+                //         }
+                //         $cmd = $cmd.")";
+                //         \Yii::$app->db->createCommand($cmd)->bindValues($arr_value)->execute();
+				// 	}
+				// 	fclose($handle);
+				// }
                 
-                unlink($path);
-                unlink($path.".csv");
+                // unlink($path);
+                // unlink($path.".csv");
     
             }
             return $fileName;
