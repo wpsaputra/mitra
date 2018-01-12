@@ -166,6 +166,8 @@ class SiteController extends Controller
         }
 
         return $this->render('upload', ['model' => $model]);
+        // $error = 'Gagal import excel, pastikan template excel dan isian sudah sesuai';
+        // throw new Exception($error);
     }
 
     public function actionDelete()

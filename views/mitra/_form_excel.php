@@ -50,8 +50,8 @@ $this->registerCssFile('@web/css/dropzone.css' , ['position' => View::POS_HEAD])
         <div class="panel-heading">
             <h3 class="panel-title">Status Upload</h3>
         </div>
-        <div class="panel-body">
-            ....
+        <div id="log" class="panel-body">
+            
         </div>
     </div>
 
@@ -88,7 +88,7 @@ $this->registerCssFile('@web/css/dropzone.css' , ['position' => View::POS_HEAD])
                 i++;
 
                 var result = fileList.map(function(a) {return a.serverFileName;});
-                $("#mitra-foto").text(result);
+                $("#log").text("Berhasil upload & import data");
 
             });
 
@@ -115,6 +115,16 @@ $this->registerCssFile('@web/css/dropzone.css' , ['position' => View::POS_HEAD])
                 console.log(fileList);
                 var result = fileList.map(function(a) {return a.serverFileName;});
                 $("#mitra-foto").text(result);
+            });
+
+            this.on("processing", function(file) {
+                $("#log").text("Now processing ...");
+
+            });
+
+            this.on("error", function(file) {
+                $("#log").text("Gagal import excel, pastikan template excel dan isian sudah sesuai");
+
             });
         },
     
